@@ -1,47 +1,129 @@
 <!DOCTYPE html>
+<!-- 
+  MELHORIA: Idioma configurado para "pt-BR", essencial para leitores de tela
+  e motores de busca interpretarem corretamente a acentuação e termos em português.
+-->
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Partidas Rankeadas</title>
+
+    <!-- METADADOS DE SEO & TEMA DA APLICAÇÃO -->
+    <meta name="description" content="Calculadora de Partidas Rankeadas - Descubra seu saldo de vitórias e seu nível no ranking (Ferro, Bronze, Prata, Ouro, Diamante, Lendário, Imortal).">
+    <meta name="theme-color" content="#0f172a">
+
+    <!-- Open Graph para compartilhamento em redes sociais (WhatsApp, Discord, LinkedIn) -->
+    <meta property="og:title" content="Calculadora de Partidas Rankeadas">
+    <meta property="og:description" content="Calcule seu saldo de vitórias e descubra sua patente no ranking gamer!">
+    <meta property="og:type" content="website">
+
+    <title>Calculadora de Partidas Rankeadas | Ranking Gamer</title>
+
+    <!-- FAVICON -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- 
+      PERFORMANCE: Preconnect com o Google Fonts para reduzir o tempo de handshake TLS
+      das fontes tipográficas da interface gamer (Rajdhani & Inter).
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Estilização CSS externa -->
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div class="container">
-        <div class="card">
-            <h1>🎮 Calculadora de Partidas Rankeadas</h1>
+
+    <!-- 
+      MELHORIA SEMÂNTICA: A tag <main> indica ao navegador o conteúdo primário da aplicação,
+      melhorando a navegação via tecnologia assistiva.
+    -->
+    <main class="container">
+        
+        <section class="card" aria-labelledby="card-title">
             
-            <form id="formulario">
+            <header class="card-header">
+                <span class="controller-icon" aria-hidden="true">🎮</span>
+                <h1 id="card-title">Calculadora Rankeada</h1>
+                <p class="subtitle">Insira suas estatísticas para determinar sua patente</p>
+            </header>
+
+            <!-- Form de entrada de dados de combate -->
+            <form id="formulario" novalidate>
+                
                 <div class="input-group">
-                    <label for="vitorias">Vitórias:</label>
+                    <label for="vitorias">
+                        <span class="icon-win" aria-hidden="true">🏆</span> Vitórias:
+                    </label>
+                    <!-- 
+                      MELHORIA DE UX & SEGURANÇA: 
+                      - min="0": Impede valores negativos na UI.
+                      - inputmode="numeric": Abre o teclado numérico em celulares.
+                      - autocomplete="off": Evita sugestões de autopreenchimento indesejadas.
+                    -->
                     <input 
                         type="number" 
                         id="vitorias" 
-                        placeholder="Digite o número de vitórias" 
+                        name="vitorias"
+                        placeholder="Ex: 45" 
+                        min="0"
+                        step="1"
+                        inputmode="numeric"
+                        autocomplete="off"
                         required
                     >
                 </div>
 
                 <div class="input-group">
-                    <label for="derrotas">Derrotas:</label>
+                    <label for="derrotas">
+                        <span class="icon-loss" aria-hidden="true">💀</span> Derrotas:
+                    </label>
                     <input 
                         type="number" 
                         id="derrotas" 
-                        placeholder="Digite o número de derrotas" 
+                        name="derrotas"
+                        placeholder="Ex: 12" 
+                        min="0"
+                        step="1"
+                        inputmode="numeric"
+                        autocomplete="off"
                         required
                     >
                 </div>
 
-                <button type="submit" class="btn-calcular">Calcular Nível</button>
+                <div class="actions-group">
+                    <button type="submit" class="btn-calcular" id="btn-submit">
+                        Calcular Nível
+                    </button>
+                </div>
             </form>
 
-            <div id="resultado" class="resultado oculto">
-                <h2 id="mensagem"></h2>
-                <div id="nivel-badge" class="nivel-badge"></div>
-            </div>
-        </div>
-    </div>
+            <!-- 
+              MELHORIA A11Y & SEMÂNTICA: 
+              - Tag <output> para resultados de cálculos.
+              - aria-live="polite" para anunciar o resultado em leitores de tela sem interromper a fala.
+              - aria-hidden="true" enquanto estiver oculta.
+            -->
+            <output id="resultado" class="resultado oculto" aria-live="polite" aria-hidden="true">
+                <div class="resultado-content">
+                    <h2 id="mensagem">
+                        <!-- O resultado será injetado dinamicamente via JS -->
+                    </h2>
+                    <div id="nivel-badge" class="nivel-badge" role="img" aria-label="Insígnia da Patente">
+                        <!-- Badge/Ícone do elo renderizado via JS -->
+                    </div>
+                </div>
+            </output>
 
+        </section>
+
+    </main>
+
+    <!-- Script com a lógica do cálculo e manipulação do DOM -->
     <script src="script.js"></script>
 </body>
+
 </html>
